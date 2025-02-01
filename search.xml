@@ -4,6 +4,44 @@
   
     
     <entry>
+      <title>Chrome高效搜索</title>
+      <link href="/2025/02/01/Chrome%E9%AB%98%E6%95%88%E6%90%9C%E7%B4%A2/"/>
+      <url>/2025/02/01/Chrome%E9%AB%98%E6%95%88%E6%90%9C%E7%B4%A2/</url>
+      
+        <content type="html"><![CDATA[<ul><li><p>搜索运算符</p><ul><li><code>引号(&quot;comment&quot;)</code>： 用于搜索完全匹配的短语。</li><li><code>减号(-keyword)</code>： 用于排除某个关键词。</li><li><code>加号(+keyword)</code>： 用于强制包含某个关键词。</li><li><code>星号(*)</code>： 用于匹配任意字符。</li><li><code>site:网址</code>:： 用于在特定网站内搜索。</li><li><code>关键词 filetype:文件类型</code>： 用于搜索特定文件类型。</li></ul></li><li><p>使用英文搜索</p></li><li><p>一些网站</p><ul><li>youtube4kdownloader 下载youtube4k,tiktok,bilibili视频(通过地址)</li><li>sitesimilar 同类网站</li><li>best site for free xxx(image…) 就可以白嫖啦</li></ul></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 其他 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Cmake入门</title>
+      <link href="/2025/02/01/Cmake%E5%85%A5%E9%97%A8/"/>
+      <url>/2025/02/01/Cmake%E5%85%A5%E9%97%A8/</url>
+      
+        <content type="html"><![CDATA[<p>引用说明: <a href="https://subingwen.cn/cmake/CMake-primer/">参考这篇博客</a></p><h1>Cmake入门</h1><h2 id="什么是Cmake？">什么是Cmake？</h2><blockquote><p>跨平台构建工具：用于生成不同平台（如 Linux/Makefile、Windows/Visual Studio、macOS/Xcode）的构建文件。<br>元构建系统：不直接编译代码，而是生成其他构建工具（如 Make、Ninja）所需的配置文件。<br>核心优势：通过编写 CMakeLists.txt 文件描述项目结构，避免手动维护不同平台的构建脚本。</p></blockquote><h2 id="安装Cmake">安装Cmake</h2><p><code>Ubuntu: sudo apt install cmake</code></p><h2 id="工程目录结构">工程目录结构</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">tree</span><br><span class="line">.</span><br><span class="line">├── bin</span><br><span class="line">├── build</span><br><span class="line">├── data</span><br><span class="line">├── include</span><br><span class="line">├── lib</span><br><span class="line">└── src</span><br></pre></td></tr></table></figure><blockquote><p>Tips: 将CMakeLists.txt放在build文件夹里更整洁</p></blockquote><h2 id="语言格式">语言格式</h2><h3 id="注释">注释</h3><p><code>行注释: #</code><br><code>块注释: #[[]]</code></p><h3 id="基础项目">基础项目</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cmake_minimum_required(VERSION 3.0) # 指定Cmake版本</span><br><span class="line">project(CALC) # 工程名字</span><br><span class="line">add_executable(app add.c div.c main.c mult.c sub.c) # 用c文件生成app的可执行文件</span><br></pre></td></tr></table></figure><h3 id="定义变量">定义变量</h3><p><code>SET(var val1 val2 val3)</code></p><ul><li>一个特殊变量CAMKE_CXX_STANDARD是c++标准<code>SET CMAKE_CXX_STANDARD 17 </code>等同于<code>-std=c++17</code></li></ul><blockquote><p>Tips: ${var}来使用变量</p></blockquote><blockquote><p>Thoughts: HOME变量自定义在project根目录(绝对目录)下</p></blockquote><h3 id="文件搜索">文件搜索</h3><p><code>file(GLOB dir var)</code></p><blockquote><p>Tips: <code>file(GLOB $&#123;HOME&#125;/include/*.h HEAD_FILE)</code></p></blockquote><h3 id="头文件">头文件</h3><p><code>include_directories(headpath)</code></p><h3 id="库">库</h3><h4 id="制作自己的库文件">制作自己的库文件</h4><ul><li><code>add_library(库名称 STATIC 源文件1 [源文件2] ...)</code></li><li><code>add_library(库名称 SHARED 源文件1 [源文件2] ...)</code></li></ul><h4 id="库目录-让编译器知道引用了什么库文件">库目录(让编译器知道引用了什么库文件)</h4><h5 id="静态库">静态库</h5><ul><li><code>link_libraries(&lt;static lib&gt; [&lt;static lib&gt;...])</code>适用于第三方库 --&gt; 输入库名称</li><li><code>link_directories(&lt;lib path&gt;)</code>适用于自带系统库 --&gt;输入库路径</li></ul><h5 id="动态库">动态库</h5><p><code>target_link_libraries(可执行文件 库名称</code></p><blockquote><p>Tips: 库的名称掐头(lib)去尾(.a,.so…)</p></blockquote><h3 id="总结">总结</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">cmake_mininum_required(VERSION <span class="number">3.0</span>) <span class="comment">#最低版本</span></span><br><span class="line"><span class="keyword">project</span>(name) <span class="comment">#工程名字</span></span><br><span class="line"><span class="keyword">SET</span>(SRC_LIST <span class="number">1</span>.cpp <span class="number">2</span>.cpp <span class="number">3</span>.cpp) <span class="comment">#定义变量</span></span><br><span class="line"><span class="keyword">SET</span>(CMAKE_CXX_STANDARD <span class="number">17</span>) <span class="comment"># c++标准</span></span><br><span class="line"><span class="keyword">SET</span>(HOME ~/Code)</span><br><span class="line"><span class="keyword">SET</span>(EXCUATABLE_OUTPUT_PATH <span class="variable">$&#123;HOME&#125;</span>/bin) <span class="comment">#输出文件路径</span></span><br><span class="line"><span class="keyword">SET</span>(LIBRARY_OUTPUT_PATH <span class="variable">$&#123;HOME/lib&#125;</span>) <span class="comment">#输出库文件路径</span></span><br><span class="line"><span class="keyword">file</span>(GLOB SRC_LIST <span class="variable">$&#123;HOME&#125;</span>/bin/*.cpp) <span class="comment">#搜索全部cpp文件,存储到SRC_LIST</span></span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;HOME&#125;</span>/<span class="keyword">include</span>) <span class="comment">#指定头文件搜索目录</span></span><br><span class="line"><span class="keyword">add_executable</span>(program.exe <span class="variable">$&#123;SRC_LIST&#125;</span>) <span class="comment">#空格或;间隔</span></span><br><span class="line"><span class="keyword">add_library</span>(库名称 STATIC/SHARED 源文件) <span class="comment">#制作库文件</span></span><br><span class="line"><span class="keyword">message</span>(STATUS <span class="string">&quot;message $&#123;HOME&#125;&quot;</span>) <span class="comment">#WARNING,SEND_ERROR,FATAL_ERROR(中断)</span></span><br><span class="line">add_definition(-D宏名称) <span class="comment">#自定义宏名称</span></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 工具 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Latex入门</title>
       <link href="/2025/02/01/Latex%E5%85%A5%E9%97%A8/"/>
       <url>/2025/02/01/Latex%E5%85%A5%E9%97%A8/</url>
@@ -11,6 +49,12 @@
         <content type="html"><![CDATA[]]></content>
       
       
+      
+        <tags>
+            
+            <tag> 工具 </tag>
+            
+        </tags>
       
     </entry>
     
@@ -25,6 +69,12 @@
       
       
       
+        <tags>
+            
+            <tag> 工具 </tag>
+            
+        </tags>
+      
     </entry>
     
     
@@ -37,6 +87,12 @@
         <content type="html"><![CDATA[<p><strong>linux下载ollama</strong></p><p><code>curl -fsSL https://ollama.com/install.sh | sh</code></p><p><strong>安装对应版本</strong></p><p><code>ollama run deepseek-r1:8b</code></p><p><strong>创建对应文件</strong></p><p><code>mkdir ds.conf.d &amp;&amp; vim yuzi</code></p><p><strong>输入内容</strong></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">FROM deepseek-r1:8b</span><br><span class="line">PARAMETER temperature 1</span><br><span class="line">SYSTEM &quot;&quot;&quot;</span><br><span class="line">基础信息</span><br><span class="line">  4 姓名：北白川玉子（きたしらかわ たまこ / Kitashirakawa Tamako）</span><br><span class="line">  5 年龄：16岁（故事开始时为高中一年级学生）</span><br><span class="line">  6 生日：12月31日（除夕日出生，与家中年糕店“玉屋”的跨年传统呼应）</span><br><span class="line">  7 身高：156cm（略矮于同龄女生，体型纤细但活力充沛）</span><br><span class="line">  8 代表色：樱花粉（发带/围裙）+ 暖米白（传统服饰）</span><br><span class="line">  9 口头禅：“大丈夫だよ～！”（没关系啦～！） + 思考时无意识揉捏年糕团</span><br><span class="line">  &quot;&quot;&quot;</span><br></pre></td></tr></table></figure><p><strong>加载模型</strong></p><p><code>ollama create yuzi -f ./yuzi</code></p><hr><blockquote><p>大功告成</p></blockquote>]]></content>
       
       
+      
+        <tags>
+            
+            <tag> 其他 </tag>
+            
+        </tags>
       
     </entry>
     
