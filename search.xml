@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>Gdb入门</title>
+      <link href="/2025/02/02/gdb%E5%85%A5%E9%97%A8/"/>
+      <url>/2025/02/02/gdb%E5%85%A5%E9%97%A8/</url>
+      
+        <content type="html"><![CDATA[<h1>开始与退出</h1><blockquote><p>首先我们要启动gdb</p></blockquote><ul><li><code>gdb &lt;program&gt;</code>&lt;–<strong>调试可执行文件</strong></li><li><code>gdb &lt;program&gt; --args 参数</code>&lt;–<strong>带参数调试</strong></li><li><code>q</code>&lt;–<strong>退出</strong></li></ul><h1>断点</h1><blockquote><p>其次我们想要查看某一刻程序的变量</p></blockquote><h2 id="断点的设置">断点的设置</h2><ul><li><code>break 函数名/行数</code></li><li><code>break *地址</code></li><li><code>break 文件:行数</code></li><li><code>break xxx if 条件</code>—条件断点</li></ul><h2 id="断点的查看与删除">断点的查看与删除</h2><ul><li><code>info breakpoints</code>—查看所有断点</li><li><code>delete [断点编号]</code>—删除指定断点</li><li><code>delete breakpoints</code>—删除所有断点</li></ul><h2 id="变量的监视">变量的监视</h2><ul><li><code>watch [变量名]</code>—变量写入时暂停</li><li><code>rwatch [变量名]</code>—变量读入时暂停</li><li><code>awatch [变量名]</code>—变量读写时暂停</li></ul><h1>运行</h1><h2 id="控制">控制</h2><ul><li><code>run或r</code>—开始运行</li><li><code>start</code>—停在main函数开头</li><li><code>continue或c</code>—继续</li></ul><h2 id="单步执行">单步执行</h2><ul><li><code>next 或 n</code>—执行下一行（跳过函数调用）</li><li><code>step 或 s</code>—执行下一行（进入函数内部）</li><li><code>stepi (n)</code>—单步二进制命令</li><li><code>finish</code>—执行完当前函数并返回</li><li><code>until [行号]</code>—执行到指定行号</li></ul><h1>查看代码和值</h1><h2 id="查看代码">查看代码</h2><ul><li><code>list 或 l</code></li><li><code>list [函数名]</code></li></ul><h2 id="查看变量-寄存器-内存">查看变量/寄存器/内存</h2><ul><li><code>print 或 p 变量</code>—打印出变量的值</li><li><code>print *arr@num</code>—打印数组</li><li><code>info register</code>—查看寄存器</li><li><code>x/[格式] [地址]</code>—查看内存的值</li></ul><blockquote><p>格式–&gt;[count][format][size]<br>count: 查看的单元数量—&gt;1,2,3…n<br>format: 显示的形式—&gt;x(十六进制),o(八进制),t(二进制),d(有符号十进制),u(无符号十进制),s(字符串),i(反汇编指令)<br>size: 单元的大小—&gt;b(1字节),h(2字节),w(4字节),g(8字节)<br>address: 地址—&gt;具体地址,寄存器,变量名,表达式</p></blockquote><h2 id="查看调用栈">查看调用栈</h2><ul><li><code>backtrace或bt</code>—查看调用栈</li><li><code>frame [编号]</code>—切换到指定栈帧</li><li><code>up/down</code>—切换到上层/下层栈帧</li></ul><h2 id="查看反汇编代码">查看反汇编代码</h2><ul><li><code>disas(semable)</code></li></ul><h2 id="UI交互">UI交互</h2><ul><li><p><code>display 模式</code></p><table><thead><tr><th>命令</th><th>功能</th></tr></thead><tbody><tr><td>src</td><td>源码</td></tr><tr><td>asm</td><td>汇编</td></tr><tr><td>split</td><td>源码和汇编</td></tr><tr><td>regs</td><td>寄存器</td></tr></tbody></table></li></ul><blockquote><p>Tips: 界面混乱时Ctrl+L刷新界面</p></blockquote><h2 id="其他">其他</h2><ul><li><code>set [var]=[valuve]</code>—设置变量</li><li><code>call [函数名](参数)</code>—调用函数</li></ul><blockquote><p>Tips: 交互模式下Enter键是继续执行上一个命令</p></blockquote>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Chrome高效搜索</title>
       <link href="/2025/02/01/Chrome%E9%AB%98%E6%95%88%E6%90%9C%E7%B4%A2/"/>
       <url>/2025/02/01/Chrome%E9%AB%98%E6%95%88%E6%90%9C%E7%B4%A2/</url>
