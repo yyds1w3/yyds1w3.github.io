@@ -1,0 +1,85 @@
+---
+import LayoutDefault from '~/layouts/LayoutDefault.astro'
+
+// 1. 定义友链的数据接口
+interface FriendItem {
+  name: string
+  href: string
+  avatar: string
+  desc: string
+}
+
+// 2. 这里配置你的友链数据
+// 结构：[分类名, 朋友列表]
+const friendMap: [string, FriendItem[]][] = [
+  [
+    "特别推荐", // 对应原来的 Year
+    [
+      {
+        name: "Astro",
+        href: "https://astro.build",
+        avatar: "https://astro.build/assets/press/logomark-light.svg",
+        desc: "The web framework for content-driven websites."
+      },
+      {
+        name: "Typography Theme",
+        href: "https://github.com/Moeyua/astro-theme-typography",
+        avatar: "https://avatars.githubusercontent.com/u/10294294?v=4",
+        desc: "The theme designer."
+      }
+    ]
+  ],
+  [
+    "技术大佬", 
+    [
+      {
+        name: "梨尽兴",
+        href: "https://blog.ljx.icu",
+        avatar: "https://blog.ljx.icu/_astro/avatar.D7XU-Olq_1tLGeh.webp",
+        desc: "The blade follows the mind,leaving no trace in the wind."
+      },
+    ]
+  ]
+]
+---
+
+<LayoutDefault>
+  <div flex="~ col gap-4">
+    {
+      friendMap.map(([category, friends]) => (
+        <section>
+          <h2 class="post-title">{category}</h2>
+          
+          <ul class="pl-6" flex="~ col gap-6">
+            {friends.map(({ name, href, avatar, desc }) => (
+              <li flex="~ row gap-4 items-center" class="hover:bg-gray-50 dark:hover:bg-gray-800/50 p-2 rounded-lg transition-colors -ml-2">
+                
+                <div class="flex-shrink-0">
+                  <img 
+                    src={avatar} 
+                    alt={name} 
+                    class="w-12 h-12 rounded-full border border-gray-200 dark:border-gray-700 object-cover"
+                  />
+                </div>
+
+                <div flex="~ col gap-1">
+                  <h3 class="post-title text-lg m-0!">
+                    <a href={href} target="_blank" rel="noopener noreferrer">{name}</a>
+                  </h3>
+                  <p class="text-sm text-gray-500 m-0!">{desc}</p>
+                </div>
+
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+
+  <div class="mt-10 pt-10 border-t border-gray-200 dark:border-gray-800">
+    <p class="text-gray-500">
+      想交换友链？请在 <a href="/about" class="underline">关于页</a> 联系我。
+    </p>
+  </div>
+</LayoutDefault>

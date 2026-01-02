@@ -30,6 +30,7 @@ export const userConfig: Partial<UserConfig> = {
       { name: 'Archive', href: '/archive' },
       { name: 'Categories', href: '/categories' },
       { name: 'About', href: '/about' },
+      { name: 'Friend', href: '/friend'}
     ],
     
     // 底部文字
@@ -42,7 +43,7 @@ export const userConfig: Partial<UserConfig> = {
   // 4. 外观设置
   appearance: {
     theme: 'system', // 跟随系统自动切换深色/浅色
-    locale: 'zh-cn', // 强制中文
+    locale: 'en-us', // 强制中文
     // 这里的颜色是主题默认的，你可以改 hex 值来换皮肤
     colorsLight: {
       primary: '#2e405b',
