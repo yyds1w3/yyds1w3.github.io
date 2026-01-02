@@ -16,11 +16,9 @@ export const userConfig: Partial<UserConfig> = {
         name: 'github',
         href: 'https://github.com/yyds1w3',
       },
-      // Typography 主题图标有限，通常可以用 'rss' 或 'twitter' 暂时顶替 Codeforces
-      // 或者如果主题支持自定义 svg，那是更高阶的用法
       {
-        name: 'rss', 
-        href: 'https://codeforces.com/profile/Konjit', // 改成你的 CF ID
+        name: 'rss',
+        href: '/atom.xml',
       },
     ],
 
