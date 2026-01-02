@@ -1,0 +1,105 @@
+---
+title: "Goodbye2025"
+pubDate: 2026-01-02 18:14
+categories: ['Codeforces']
+description: "Goodbye2025 题解与思路分析"
+slug: "Goodbye2025"
+draft: false
+---
+# Goodbye2025
+
+## C. First or Second
+
+- 题目描述
+
+> 给一个数组a, 每次从a的第一个或者第二个选择一个数$a_i$, 如果是第一个数则$X + a_i$否则$X - a_i$
+>
+> 求X的最大值(当a只剩下一个数的时候停止)
+
+-  思路分析
+
+> 反向思考 ： 来列举剩下的$a_i$
+>
+> 我们可以发现 : $a_i$的右边一定是被$-a_i$的(可以用suf后缀和优化)， 左边可能是$+a_i$也可能是$-a_i$(除了第一个肯定是+)
+>
+> 我们需要列举每个剩下的$a_i$然后求最大值
+
+```cpp
+void solve() {
+	int n; cin >> n;
+    for (int i = 1; i <= n; ++i) cin >> a[i];
+    suf[n + 1] = 0;
+    for (int i = n; i >= 1; --i) {
+		suf[i] = suf[i+1] - a[i];
+    }
+    ll ans = -1e9, pre = 0;
+    for (int i = 1; i <= n; ++i) {
+		ans = max(ans, pre + suf[i + 1]);
+       	if (i == 1) pre += a[i];
+        else pre += abs(a[i]);
+    }
+    cout << ans << "\n";
+}
+```
+
+## D. Xmas or Hysteria
+
+- 题目描述
+
+> 有n个精灵， 他们有$a_i$的生命和攻击力, 我们需要在X个回合后仍然需要m个精灵存活, 是否存在一个迭代序列满足条件? (迭代: 当所有存活的精灵都主动攻击后才会停止， 一个迭代指的是A攻击B， $h_a\to{h_a-a_b} h_b\to{h_b-a_a}$)， 每个精灵的$a_i$都不同(distinct)
+
+- 思路分析
+
+> 因为一次攻击至少死一个精灵， 所以迭代最多是$\lfloor{\frac{n}{2}}\rfloor$, 存活的精灵最多是$\lfloor{\frac{n}{2}}\rfloor$
+>
+> 把精灵按照攻击力从低到高排序
+>
+> 分类讨论m : 
+>
+> - m > $\lfloor{\frac{n}{2}}\rfloor$  不合法
+> - m = 0 : 所有人攻击最大的看看有没有可能干死他， 如果可以， 我们看看是第i个干死他， 然后剩下的精灵就按照链式送死个第i个， 然后i再取干最大的
+> - m > 0 : 我们让 1 ~ n - 2(m-1)的精灵只剩下一个, n - 2(m-1)+1 ~ n的精灵剩下m-1, 这样就有m个了
+
+```cpp
+array<int, 2> a[MAXN];
+void solve() {
+	int n, m; cin >> n >> m;
+    if (m > n / 2) {
+        cout << "-1\n";
+        return;
+    }
+    for (int i = 1; i <= n; ++i) cin >> a[i][0], a[i][1] = i;
+    sort(a + 1, a + 1 + n);
+    vector<array<int, 2>> ans;
+    if (m == 0) {
+        ll total = 0;
+        for (int i = 1; i <= n - 1; ++i) total += a[i][0];
+        if (total < a[n][0]) {
+            cout << "-1\n";
+            return;
+        }
+        for (int i = n-1; i >= 1; --i) {
+			a[n][0] -= a[i][0];
+            if (a[n][0] <= 0) {
+                for (int j = 1; j < i; ++j) {
+                    ans.push_back({a[j][1], a[j+1][1]});
+                }
+                ans.push_back({a[i][1], a[n][1]});
+                break;
+            }
+            ans.push_back({a[i][1], a[n][1]});
+        }
+        
+    }else {
+        for (int i = 1; i <= n - 2*(m - 1)-1; ++i) { // 贡献一个精灵
+            ans.push_back({a[i+1][1], a[i][1]});
+        }
+        for (int i = n - 2*(m-1) + 1; i <= n-1; i += 2) { // 贡献m-1个精灵
+			ans.push_back({a[i+1][1], a[i][1]});
+        }
+    }
+    cout << ans.size() << "\n";
+    for (auto [x, y] : ans) cout << x << " " << y << "\n";
+}
+```
+

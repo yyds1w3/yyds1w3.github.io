@@ -20,3 +20,13 @@ html {
   --at-apply: 'ease-in-out duration-300ms';
   --at-apply: 'hover:(c-background bg-primary decoration-primary)';
 }
+/* 暴力覆盖：让所有文章内容占满容器宽度 */
+.prose {
+  max-width: 100% !important;
+  min-width: 100% !important;
+}
+
+/* 如果你的主题用了 UnoCSS/Tailwind 的 typography 插件，可能还需要这句 */
+.prose :where(p, ul, ol, pre) {
+    max-width: 80% !important;
+}
