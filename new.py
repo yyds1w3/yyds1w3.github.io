@@ -77,7 +77,7 @@ import ProblemCard from '../../components/ProblemCard.astro';
     if not os.path.exists(POSTS_DIR):
         os.makedirs(POSTS_DIR)
 
-    filepath = os.path.join(POSTS_DIR, f"{slug}.md")
+    filepath = os.path.join(POSTS_DIR, f"{slug}.mdx")
 
     if os.path.exists(filepath):
         print(f"❌ 错误: 文件已存在 -> {filepath}")
