@@ -69,6 +69,7 @@ description: "{title} 题解与思路分析"
 slug: "{slug}"
 draft: false
 ---
+import ProblemCard from '../../components/ProblemCard.astro';
 
 """
     # 5. 写入文件

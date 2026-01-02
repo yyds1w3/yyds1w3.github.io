@@ -1,0 +1,59 @@
+<script>
+  /**
+   * 核心逻辑：
+   * 1. 监听 astro:page-load 事件（支持首次加载和页面切换）
+   * 2. 找到所有代码块 (<pre>)
+   * 3. 把此脚本所在组件的 data-copy-btn 模板克隆一份，塞入 <pre> 内部
+   * 4. 绑定复制功能
+   */
+  document.addEventListener('astro:page-load', () => {
+    // 🎯 1. 精准定位所有代码块
+    // 同时兼容 Shiki (astro-code) 和 Tailwind Typography (.prose pre)
+    const codeBlocks = document.querySelectorAll('pre.astro-code, .prose pre');
+
+    codeBlocks.forEach((pre) => {
+      // 防重复：如果已经加过了，就跳过
+      if (pre.querySelector('.copy-code-btn')) return;
+
+      // 🎯 2. 关键：强制 pre 标签相对定位，作为按钮的定位基准
+      // 我们通过 JS 直接加 style，保证优先级最高
+      (pre as HTMLElement).style.position = 'relative';
+
+      // 🎯 3. 创建按钮 DOM
+      const button = document.createElement('button');
+      button.className = 'copy-code-btn';
+      button.type = 'button';
+      button.setAttribute('aria-label', 'Copy code');
+      // 这里使用 Emoji 图标，兼容性最好
+      button.innerHTML = '<span class="btn-icon">📄</span>';
+
+      // 🎯 4. 绑定点击事件
+      button.addEventListener('click', async () => {
+        // 获取纯文本
+        const codeText = pre.querySelector('code')?.innerText || '';
+        if (!codeText.trim()) return;
+
+        try {
+          await navigator.clipboard.writeText(codeText);
+          
+          // 成功状态反馈
+          button.classList.add('success');
+          button.innerHTML = '<span class="btn-icon">✅</span>';
+
+          // 2秒后恢复原状
+          setTimeout(() => {
+            button.classList.remove('success');
+            button.innerHTML = '<span class="btn-icon">📄</span>';
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy!', err);
+          button.innerHTML = '❌';
+        }
+      });
+
+      // 🎯 5. 将按钮插入到 <pre> 标签内部的最后面
+      pre.appendChild(button);
+    });
+  });
+</script>
+

@@ -1,4 +1,5 @@
 ---
+// src/layouts/Layout.astro
 import { themeConfig } from '~/.config'
 import SiteFooter from '~/components/SiteFooter.astro'
 import SiteNavigation from '~/components/SiteNavigation.astro'
@@ -8,12 +9,13 @@ import LaTeX from '~/components/LaTeX.astro'
 import Analytics from '~/components/Analytics.astro'
 import ThemeScript from '~/components/ThemeScript.astro'
 import '~/styles/global.css'
-
+import CopyButton from '~/components/CopyButton.astro'
 
 const lang = themeConfig.appearance.locale ?? 'en-us'
 const dark = themeConfig.appearance.theme === 'dark'
 ---
 
+<!doctype html>
 <html lang={lang} class:list={['animation-prepared', { dark }]}>
   <head>
     <slot name="seo"> <SiteSeo /> </slot>
@@ -23,9 +25,9 @@ const dark = themeConfig.appearance.theme === 'dark'
   </head>
 
   <body
-  class="h-100vh w-full min-w-390px mx-a"
-  p="7.5 lg:(y-0 x-8)"
-  lg="grid gap-x-8 cols-[1fr_320px] rows-[1fr_9rem]"
+    class="h-100vh w-full min-w-390px mx-a"
+    p="7.5 lg:(y-0 x-8)"
+    lg="grid gap-x-8 cols-[1fr_320px] rows-[1fr_9rem]"
   >
     <header
       class="transition-swup-header flex flex-col gap-2.5"
@@ -44,6 +46,7 @@ const dark = themeConfig.appearance.theme === 'dark'
       <SiteFooter />
     </footer>
 
+    <CopyButton />
     <script>
       document.addEventListener('animationend', removeAnimation, false)
       function removeAnimation() {
