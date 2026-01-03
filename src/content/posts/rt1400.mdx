@@ -11,34 +11,245 @@ import ProblemCard from '../../components/ProblemCard.astro';
 <ProblemCard
   platform="Codeforces"
   rating={1400}
-  
   link="https://codeforces.com/contest/1506/problem/D"
 />
+## D Epic Transformation
+
+- 题目描述
+
+> 给一个数组a, $a_1,a_2...a_n$
+>
+> 每次选择两个不同的$a_i,a_j$删除， 求最后的数个数最小多少
+
+- 思路分析
+
+> 找到最多的数(有x个), 如果$x > \frac{n+1}{2}$ ,答案就是$x - (n - x) == 2x-n$
+>
+> 否则n是奇数答案为1， n是偶数答案为0
+
+```cpp
+void solve() {
+    int n; cin >> n;
+    int z = 0;
+    map<int,int> m;
+    for (int i = 1; i <= n; ++i) {
+        int x; cin >> x;
+        m[x]++;
+        z = max(z, m[x]);
+    }
+    if (2 * z > n) cout << (2 * z - n) << "\n";
+    else cout << (n % 2) << "\n";
+}
+```
+
+
+
+
+
+
 
 <ProblemCard
   platform="Codeforces"
   rating={1400}
   link="https://codeforces.com/contest/1520/problem/E"
 />
+## E Arranging The Sheep
 
+- 题目描述
+
+> 给一个字符串`**.**..**`之类的， 每次可以让`*`向右边或者左边移动一格(如果左边或者右边是`.`)， 求移动次数最少可以让`*`全部挨在一起
+
+- 思路分析
+
+> 先假设第i个`*`是标准， 那么1 ~ i-1的`*`j要向右走x - (i - j)
+>
+> 如果我们枚举每头🐏然后再计算每头🐏的举例就是$O(n^2)$直接TLE
+>
+> 根据数学中位数， 可以知道数列中到中间的数的距离和是最短的
+>
+> 举个例子: 1 4 5 7 10
+>
+> 1 : 3 + 4 + 6 + 9 = 22
+>
+> 4 : 3 + 1 + 3 + 6 = 13
+>
+> 5 : 4 + 1 + 2 + 5 = 12
+>
+> 7 : 6 + 3 + 2 + 3 = 14
+>
+> 10: 9 + 6 + 5 + 3 = 23
+>
+> 怎么证明? 当x小于中间数时, 他向右移动, 右边的数$t* (n - x)$少走加入t步, 左边的数就多走$t*(x-1)$步, 总和就会变小, 同理当x大于中间数
+>
+> 向左走的时候总和变小
+
+```cpp
+void solve() {
+    int n; cin >> n;
+    int cnt = 0;
+    for (int i = 1; i <= n; ++i) {
+        char c;
+        cin >> c; 
+        if (c == '*') {
+            a[++cnt] = i;
+        }
+    }
+    if (cnt == 0) {cout << "0\n"; return;}
+    ll ans = 0;
+    int mid = (cnt + 1) / 2;
+    for (int i = 1; i <= cnt; ++i) {
+        ans += abs(a[i] - a[mid] - (i - mid));
+    }
+    cout << ans << "\n";
+}
+```
 <ProblemCard
   platform="Codeforces"
   rating={1400}
   link="https://codeforces.com/contest/1605/problem/C"
 />
+## C Dominant Charcter
 
+- 题目描述
+
+> 有一个字符串s, 仅仅由abc三个字符（都是可有可无的）组成, 求s的字串中满足$cnt_a > cnt_b \& cnt_a > cnt_c$ 的个数
+
+- 思路分析
+
+> 找到一个最小元字串满足题意, 其他任意字串可以由元字串来拼凑
+>
+> 1 ： a    1+0+0
+>
+> 2 :   aa  2+0+0
+>
+> 3 :  aaa aba aca 2+1+0
+>
+> 4:   abca acba 2+1+1
+>
+> 5:   ababa acaca 3+2+0
+>
+> 6:   abbaca accaba 3+2+1
+>
+> 7:   abbacca 3+2+2
+
+```cpp
+void solve() {
+    int n; cin >> n;
+    string s; cin >> s;
+    int ans = 1e9;
+    for (uint i = 0; i < s.size(); ++i) {
+        int cnt[3] = {0};
+        for (int k = 0; k < 7; ++k){
+            if (i + k >= s.size()) break;
+            cnt[s[i+k]-'a']++;
+            if (k >= 1 && cnt[0] > cnt[1] && cnt[0] > cnt[2]) {
+                ans = min(ans, k+1);
+                break;
+            }
+        }
+    }
+    cout << (ans == 1e9 ? -1 : ans) << "\n";
+}
+```
 <ProblemCard
   platform="Codeforces"
   rating={1400}
   link="https://codeforces.com/contest/1526/problem/B"
 />
+## B I hate 1111
+
+- 题目分析
+
+> 一个整数n能否被11, 111, 1111, 11111....相加得到? 
+
+- 思路分析
+
+>  发现1111 = 11 + 111 * 10
+>
+> 11111 = 1111 * 10 + 11
+>
+> 所以元整数是11和111
+>
+> $n=11x+111y$
+>
+> 因为11个111可以换成111个11， 所以我们只需要列举0~10个111看看是否有解
+
+```cpp
+void solve() {
+    int n; cin >> n;
+    for (int i = 0; i <= 10; ++i) {
+        if (n - i * 111 >= 0 && (n - i * 111) % 11 == 0){
+            cout << "YES\n";
+            return;
+        }
+    }
+    cout << "NO\n";
+}
+```
 
 <ProblemCard
   platform="Codeforces"
   rating={1400}
   link="https://codeforces.com/problemset/problem/1551/B2"
 />
+## B2 Wonderful Coloring - 2
 
+- 题目分析
+
+> 有一个数组$a_1,a_2,a_3....a_n$, 有$k$种颜色
+>
+> 要求:
+>
+> 1. 一个颜色涂的格子不能有相同值
+> 2. 让所有涂色的格子的总值尽可能高
+
+- 思路分析
+
+>  解法一: 一个链式前向星存储每种值+ 他们的位置,  然后我们从最大值开始涂色，限制同一个值不能涂色超过k次, 桶排序
+>
+> 解法二: 用vector存储每种值加位置， 然后也是从最大值涂色.....
+
+```cpp
+const int MAXN = 2e5 + 1;
+int head[MAXN], pos[MAXN], nxt[MAXN], tot;
+int c[MAXN];
+int n, k;
+void init() {
+    for (int i = 1; i <= n; ++i) {head[i] = -1; c[i] = 0;}
+    tot = 0;
+}
+void insert(int val, int p) {
+    ++tot;
+    pos[tot] = p;
+    nxt[tot] = head[val];
+    head[val] = tot;
+}
+void solve() {
+    cin >> n >> k;
+    init();
+    int mx_val = 0;
+    for (int i = 1; i <= n; ++i) {
+        int v; cin >> v;
+        insert(v, i);
+        mx_val = max(v, mx_val);
+    }
+    vector<int> paint;
+    for (int i = mx_val; i >= 1; --i) {
+        if (head[i] == -1) continue;
+        int count = 0;
+        for (int j = head[i]; j != -1; j = nxt[j]) {
+            if (count < k) {
+                paint.push_back(pos[j]);
+                count++;
+            }
+        }
+    }
+    int painted = paint.size() / k * k;
+    for (int i = 0; i < painted; ++i) c[paint[i]] = i % k + 1;
+    for (int i = 1; i <= n; ++i) cout << c[i] << " ";
+    cout << "\n";
+}
+```
 <ProblemCard
   platform="Codeforces"
   rating={1400}
