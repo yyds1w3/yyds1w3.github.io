@@ -40,7 +40,7 @@ export const userConfig: Partial<UserConfig> = {
 
   // 4. 外观设置
   appearance: {
-    theme: 'system', // 跟随系统自动切换深色/浅色
+    theme: 'light', // 跟随系统自动切换深色/浅色
     locale: 'en-us', // 强制中文
     // 这里的颜色是主题默认的，你可以改 hex 值来换皮肤
     colorsLight: {
