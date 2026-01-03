@@ -21,6 +21,7 @@ export default defineConfig({
       devtoolsJson(),
     ],
   },
+  output: 'static',
   markdown: {
     remarkPlugins: [
       remarkMath,
