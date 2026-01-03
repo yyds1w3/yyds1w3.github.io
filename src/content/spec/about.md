@@ -18,8 +18,8 @@ QQ邮箱: 2039320954@qq.com 欢迎大佬与萌新交流与学习
 > 
 > Desc: Just do it!
 > 
-> Link: https://qingw.netlify.app
+> Link: https://qingw.top
 > 
-> Rss: https://qingw.netlify.app/atom.xml
+> Rss: https://qingw.top/atom.xml
 > 
-> Avatar: http://qingw.netlify/images/fll.webp
+> Avatar: http://qingw.top/images/fll.webp
