@@ -7,7 +7,7 @@ export const userConfig: Partial<UserConfig> = {
     subtitle: '格物致知',  // 副标题，可以写学校或格言
     author: 'Qingw',          // 你的名字
     description: 'ACM', // SEO 描述
-    website: 'https://yyds1w3.top', // 你的实际域名（上线后改） 
+    website: 'https://qingw.top', // 你的实际域名（上线后改） 
     pageSize: 10, // 首页显示多少篇文章
     
     // 2. 社交链接
