@@ -1,0 +1,167 @@
+---
+title: "Hello2026"
+pubDate: 2026-01-08 14:08
+categories: ['Codeforces']
+description: "Hello2026 题解与思路分析"
+slug: "Hello2026"
+draft: false
+---
+import ProblemCard from '../../components/ProblemCard.astro';
+
+> 新年第一赛ABC做了, 记录一下
+
+<ProblemCard
+  platform="Codeforces"
+  link="https://codeforces.com/contest/2183/problem/A"
+/>
+
+## A Binary Array Game
+
+- 题目概述
+
+>  给你一个数组$a$, 这个数组$a$里只有0和1
+>
+> Alice和Bob可以执行两个操作之一, Alice先走
+>
+> - 选择$a_l$到$a_r$删除并替换为一个数字$1 - min(a_l...a_r)$
+>
+> 求谁会赢?（只剩下一个数字，如果是0 Alice赢， 如果是1 Bob赢
+
+- 题目分析
+
+>  只要$a_l-a_r$有0, 替换后就为1
+>
+> Alice想赢就得把数组变为全1
+>
+> - 起始数组为11111111， 那么Alice赢
+> - 起始数组为1xxxxxxxx,  因为x中有0， 所有我们选择$a_2, a_n$， 就变成了11 Alice赢
+> - 起始数组为xxxxxxxx1， 选择$a_1, a_{n-1}$, 就变成了11 Alice赢
+> - 起始数组为0xxxxxxx0, Alice操作后肯定是0xxxxxxx, Bob直接选择$a_2, a_n$ 就变成了1 Bob赢
+
+```cpp
+const int MAXN = 101;
+int a[MAXN];
+void solve() {
+    int n; cin >> n;
+    for (int i = 1; i <= n; ++i) {
+        cin >> a[i];
+    }
+    if (a[1] || a[n]) cout << "Alice\n";
+    else cout << "Bob\n";
+}
+
+```
+<ProblemCard
+  platform="Codeforces"
+  link="https://codeforces.com/contest/2183/problem/B"
+/>
+
+## B
+
+- 题目概述
+
+>  给你一个数组$a$， 长度$n$， 一个窗口长度为$k$， $f(l,r) = mex(a_l, a_r)$[^1]
+>
+> 你每次选择$mex$最大的窗口并且在这个窗口里删除一个数
+>
+> 求最后$a$只剩$k-1$长度时， 最大的$mex(a)$
+
+- 题目分析
+
+>  我们需要尽可能保护$a$中的$0,1,2...k-2$
+>
+> 答案为$max(mex(a), k-1)$
+
+```cpp
+const int MAXN = 2e5 + 1;
+int a[MAXN];
+void solve() {
+    int n, k; cin >> n >> k;
+    for (int i = 1; i <= n; ++i) {
+        cin >> a[i];
+    }
+    sort(a + 1, a + 1 + n);
+    int e = unique(a + 1, a + 1 + n) - a - 1;
+    int ans = e;
+    for (int i = 1; i <= e; ++i) {
+        if (i - 1 != a[i]) {
+            ans = i - 1;
+            break;
+        }
+    }
+    ans = min(k - 1, ans);
+    cout << ans << endl;
+
+```
+
+<ProblemCard
+  platform="Codeforces"
+  link="https://codeforces.com/contest/2183/problem/C"
+/>
+## C War Strategy
+
+- 题目概述
+
+> 给n,m,k
+>
+> n代表数组长度， m代表限制天数， k代表起始大本营
+>
+> 每天可以执行操作
+>
+> 1. a_i的士兵部分或全部的移动一个单位
+> 2. a_k的士兵加1
+>
+> 问在m天内，怎么让数组上士兵不为空的格子最多?
+
+- 题目分析
+
+>  我们先分析拓展一边
+>
+> $3, \underbrace{2,1}_{d_2 = 2}0 \underbrace{1,2,3}_{d1=3}$
+>
+> 其中0代表大本营, 我们怎么让给定d1， 使得运输的时间最短?-- 当然是先屯兵，再一起走
+>
+> $t_{d_1} = t_{屯兵} + t_{行军}= d_1 + d_1 - 1 =2d_1-1$
+>
+>  我们发现了一件事情, 在行军的过程中大本营也在屯兵
+>
+> $t_{d_2} = t_{屯兵} + t_{行军} = max(0, d_2 - d_1) + 1 + d_2 - 1 == max(0, d_2-d_1)+d_2$
+>
+>  可得: 
+>
+> $t_d = t_{d_1} + t_{d_2} = 2d_1 + d_2 - 1 + max(0, d_2-d_1)$
+>
+> 我们定$d_2 < d_1$ 则$t_d = 2d_1 + d_2 - 1$
+>
+> 为了让$t_d\leq m \& d_1 + d_2最大$
+>
+> 我们要让$d_2$尽可能大，看循环部分的代码
+
+```cpp
+int n, m, k;
+void solve() {
+    cin >> n >> m >> k;
+    int mx = max(k - 1, n - k);
+    int mn = min(k - 1, n - k);
+    int ans = 0;
+    for (int d2 = 0; d2 <= mn; ++d2) {
+        for (int d1 = mx; d1 >= d2; --d1) {
+            if (d2 + 2 * d1 - 1 <= m) {ans = max(ans, d1 + d2 + 1); break;}
+        }
+    }
+    cout << ans << endl;
+}
+```
+
+<ProblemCard
+  platform="Codeforces"
+  link="https://codeforces.com/contest/2183/problem/D1"
+/>
+
+
+<ProblemCard
+  platform="Codeforces"
+  link="https://codeforces.com/contest/2183/problem/D2"
+/>
+
+[^1]: Mex是最小的未出现的正整数
